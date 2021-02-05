@@ -8,7 +8,7 @@
 import Foundation
 
 /// Describes everything to operate on network resources. Encapsulates the details to form a network request.
-public protocol NetworkCommand: Command {
+public protocol NetworkCommand {
 
     static var service: Service { get }
     var host: String { get }

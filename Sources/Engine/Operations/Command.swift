@@ -7,18 +7,12 @@
 
 import Foundation
 
-/// Concurrent operation queue
+/// Serial operation queue
 private let serialQueue: OperationQueue = {
     let queue = OperationQueue()
     queue.maxConcurrentOperationCount = 1
     return queue
 }()
-
-/// Contains the general logic for execution of commands.
-///
-/// A command is defined as protocol on top of `Operation` which is important for it's execution which is done using
-/// a OperationQueue.
-public protocol Command: Operation {}
 
 public extension Operation {
 
@@ -33,7 +27,7 @@ public extension Operation {
     }
 }
 
-public extension Array where Element == Command {
+public extension Array where Element == Operation {
 
     func executeSync() {
         serialQueue.addOperations(self, waitUntilFinished: true)
