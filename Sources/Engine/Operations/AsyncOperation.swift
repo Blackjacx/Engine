@@ -18,6 +18,10 @@ import Foundation
 /// - https://aplus.rs/2018/asynchronous-operation/
 open class AsyncOperation: Operation {
 
+    private let lockQueue = DispatchQueue(label: "com.stherold.async_operaton_lock_queue", attributes: .concurrent)
+
+    // MARK: - State Management
+
     public enum State: String {
         case ready, executing, finished
 
@@ -30,21 +34,16 @@ open class AsyncOperation: Operation {
     public override var isExecuting: Bool { state == .executing }
     public override var isFinished: Bool { state == .finished }
 
-    private let stateQueue = DispatchQueue(label: "AsyncOperation State Queue", attributes: .concurrent)
-
-    /// Non thread-safe state storage, use only with locks
-    private var stateStore: State = .ready
-
     /// Thread-safe computed state value
-    public var state: State {
+    var state: State {
         get {
-            stateQueue.sync { stateStore }
+            lockQueue.sync { stateStore }
         }
         set {
             let oldValue = state
             willChangeValue(forKey: state.keyPath)
             willChangeValue(forKey: newValue.keyPath)
-            stateQueue.sync(flags: .barrier) {
+            lockQueue.sync(flags: [.barrier]) {
                 stateStore = newValue
             }
             didChangeValue(forKey: state.keyPath)
@@ -52,10 +51,25 @@ open class AsyncOperation: Operation {
         }
     }
 
+    /// Non thread-safe state storage, use only with locks
+    private var stateStore: State = .ready
+
+    /// Trigger fatal error when main() executed by a subclass.
+    open override func main() {
+        preconditionFailure("Subclasses must implement `main` without overriding super.")
+    }
+
     public override func start() {
 
-        guard !isCancelled else { state = .finished; return }
+        guard !isCancelled else {
+            state = .finished
+            return
+        }
         state = .executing
         main()
+    }
+
+    public func finish() {
+        state = .finished
     }
 }
