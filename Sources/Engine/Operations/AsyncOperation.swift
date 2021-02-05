@@ -16,7 +16,7 @@ import Foundation
 /// - https://gist.github.com/Sorix/57bc3295dc001434fe08acbb053ed2bc
 /// - https://www.raywenderlich.com/5293-operation-and-operationqueue-tutorial-in-swift
 /// - https://aplus.rs/2018/asynchronous-operation/
-open class AsyncOperation: Operation {
+open class AsyncOperation: Operation, Executable {
 
     private let lockQueue = DispatchQueue(label: "com.stherold.async_operaton_lock_queue", attributes: .concurrent)
 

@@ -1,5 +1,5 @@
 //
-//  Command.swift
+//  Executable.swift
 //  Engine
 //
 //  Created by Stefan Herold on 19.11.20.
@@ -14,27 +14,27 @@ private let serialQueue: OperationQueue = {
     return queue
 }()
 
-public extension Operation {
+public protocol Executable: Operation {}
+
+public extension Executable {
 
     func executeSync() {
         serialQueue.addOperations([self], waitUntilFinished: true)
     }
 
     func executeAsync(completion: @escaping () -> Void) {
-
         serialQueue.addOperation(self)
         serialQueue.addBarrierBlock { completion() }
     }
 }
 
-public extension Array where Element == Operation {
+public extension Array where Element: Executable {
 
     func executeSync() {
         serialQueue.addOperations(self, waitUntilFinished: true)
     }
 
     func executeAsync(completion: @escaping () -> Void) {
-
         serialQueue.addOperations(self, waitUntilFinished: false)
         serialQueue.addBarrierBlock { completion() }
     }
