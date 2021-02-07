@@ -12,7 +12,7 @@ import FoundationNetworking
 #endif
 
 public typealias RequestClosure<T: Decodable> = (RequestResult<T>) -> Void
-public typealias RequestResult<T: Decodable> = Result<T, NetworkError>
+public typealias RequestResult<T: Decodable> = Result<T, Network.Error>
 
 public struct Network {
 
@@ -21,12 +21,12 @@ public struct Network {
 
     public init() {}
 
-    public func syncRequest<T: Decodable>(resource: Resource) throws -> RequestResult<T> {
+    public func syncRequest<T: Decodable>(resource: Resource) -> RequestResult<T> {
 
         let semaphore = DispatchSemaphore(value: 0)
         var result: RequestResult<T>!
 
-        try request(resource: resource) { (receivedResult: RequestResult<T>) in
+        request(resource: resource) { (receivedResult: RequestResult<T>) in
             result = receivedResult
             semaphore.signal()
         }
@@ -34,7 +34,7 @@ public struct Network {
         return result
     }
 
-    public func request<T: Decodable>(resource: Resource, completion: @escaping RequestClosure<T>) throws {
+    public func request<T: Decodable>(resource: Resource, completion: @escaping RequestClosure<T>) {
 
         var request = URLRequest(url: resource.url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5)
         request.httpMethod = resource.method.rawValue
@@ -46,7 +46,12 @@ public struct Network {
         }
 
         if let parameters = resource.parameters {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            do {
+                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            } catch {
+                completion(.failure(.parameterEncodingToJsonFailed(error: error)))
+                return
+            }
         }
 
         Self.session.dataTask(with: request) { (data, response, error) in
@@ -58,7 +63,7 @@ public struct Network {
 
             guard (200..<400).contains(response.statusCode) else {
 
-                var loggedError: Error? = error
+                var loggedError: Swift.Error? = error
                 if let data = data, let failureMessage = String(data: data, encoding: .utf8) {
                     loggedError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: failureMessage])
                 }
@@ -86,7 +91,7 @@ public struct Network {
                 let decodable = try type(of: resource).service.jsonDecode(T.self, from: data)
                 completion(.success(decodable))
             } catch {
-                completion(.failure(.decodingFailed(error: error)))
+                completion(.failure(.jsonDecodingFailed(error: error)))
             }
         }.resume()
     }
