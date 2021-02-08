@@ -40,7 +40,7 @@ public struct Network {
         request.httpMethod = resource.method.rawValue
         request.allHTTPHeaderFields = resource.headers
 
-        if Self.verbosityLevel > 0 {
+        if Self.verbosityLevel > 1 {
           print("Request: [\(resource.method)] \(resource.url)")
           print("Header Fields: \(resource.headers ?? [:])")
         }
@@ -78,8 +78,8 @@ public struct Network {
 
             do {
                 if Self.verbosityLevel > 0 {
-                    let str = String(data: data, encoding: .utf8)!
-                    print("Response: \"\(str)\"")
+                    let json = String(data: data, encoding: .utf8)!
+                    print(json)
                 }
 
                 // Prevents decoding error when there is no data in the response
