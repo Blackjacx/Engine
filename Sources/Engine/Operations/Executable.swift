@@ -8,9 +8,9 @@
 import Foundation
 
 /// Serial operation queue
-private let serialQueue: OperationQueue = {
+private let concurrentQueue: OperationQueue = {
     let queue = OperationQueue()
-    queue.maxConcurrentOperationCount = 1
+    queue.maxConcurrentOperationCount = OperationQueue.defaultMaxConcurrentOperationCount
     return queue
 }()
 
@@ -19,23 +19,23 @@ public protocol Executable: Operation {}
 public extension Executable {
 
     func executeSync() {
-        serialQueue.addOperations([self], waitUntilFinished: true)
+        concurrentQueue.addOperations([self], waitUntilFinished: true)
     }
 
     func executeAsync(completion: @escaping () -> Void) {
-        serialQueue.addOperation(self)
-        serialQueue.addBarrierBlock { completion() }
+        concurrentQueue.addOperation(self)
+        concurrentQueue.addBarrierBlock { completion() }
     }
 }
 
 public extension Array where Element: Executable {
 
     func executeSync() {
-        serialQueue.addOperations(self, waitUntilFinished: true)
+        concurrentQueue.addOperations(self, waitUntilFinished: true)
     }
 
     func executeAsync(completion: @escaping () -> Void) {
-        serialQueue.addOperations(self, waitUntilFinished: false)
-        serialQueue.addBarrierBlock { completion() }
+        concurrentQueue.addOperations(self, waitUntilFinished: false)
+        concurrentQueue.addBarrierBlock { completion() }
     }
 }
