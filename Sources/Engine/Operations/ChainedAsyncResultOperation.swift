@@ -54,3 +54,7 @@ extension ChainedAsyncResultOperation: ChainedOperationOutputProviding {
         return try? result?.get()
     }
 }
+
+protocol ChainedOperationOutputProviding {
+    var output: Any? { get }
+}

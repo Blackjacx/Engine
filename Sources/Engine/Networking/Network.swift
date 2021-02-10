@@ -21,12 +21,12 @@ public struct Network {
 
     public init() {}
 
-    public func syncRequest<T: Decodable>(resource: Resource) -> RequestResult<T> {
+    public func syncRequest<T: Decodable>(endpoint: Endpoint) -> RequestResult<T> {
 
         let semaphore = DispatchSemaphore(value: 0)
         var result: RequestResult<T>!
 
-        request(resource: resource) { (receivedResult: RequestResult<T>) in
+        request(endpoint: endpoint) { (receivedResult: RequestResult<T>) in
             result = receivedResult
             semaphore.signal()
         }
@@ -34,18 +34,18 @@ public struct Network {
         return result
     }
 
-    public func request<T: Decodable>(resource: Resource, completion: @escaping RequestClosure<T>) {
+    public func request<T: Decodable>(endpoint: Endpoint, completion: @escaping RequestClosure<T>) {
 
-        var request = URLRequest(url: resource.url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5)
-        request.httpMethod = resource.method.rawValue
-        request.allHTTPHeaderFields = resource.headers
+        var request = URLRequest(url: endpoint.url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5)
+        request.httpMethod = endpoint.method.rawValue
+        request.allHTTPHeaderFields = endpoint.headers
 
         if Self.verbosityLevel > 1 {
-          print("Request: [\(resource.method)] \(resource.url)")
-          print("Header Fields: \(resource.headers ?? [:])")
+          print("Request: [\(endpoint.method)] \(endpoint.url)")
+          print("Header Fields: \(endpoint.headers ?? [:])")
         }
 
-        if let parameters = resource.parameters {
+        if let parameters = endpoint.parameters {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
             } catch {
@@ -88,7 +88,7 @@ public struct Network {
                   return
                 }
 
-                let decodable = try type(of: resource).service.jsonDecode(T.self, from: data)
+                let decodable = try endpoint.jsonDecode(T.self, from: data)
                 completion(.success(decodable))
             } catch {
                 completion(.failure(.jsonDecodingFailed(error: error)))

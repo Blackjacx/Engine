@@ -7,8 +7,4 @@
 
 import Foundation
 
-public protocol Service {
-
-    /// Only the service knows how to decode json into model objects.
-    func jsonDecode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
-}
+public protocol Service {}
