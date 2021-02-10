@@ -11,7 +11,7 @@ extension Network {
 
     public enum Error: Swift.Error {
         case invalidResponse(error: Swift.Error?)
-        case invalidStatusCode(code: Int, error: Swift.Error?)
+        case invalidStatusCode(code: Int, underlying: Swift.Error?)
         case noData(error: Swift.Error?)
         case jsonDecodingFailed(error: Swift.Error?)
         case parameterEncodingToJsonFailed(error: Swift.Error?)
