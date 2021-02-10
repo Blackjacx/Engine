@@ -1,5 +1,5 @@
 //
-//  Resource.swift
+//  Endpoint.swift
 //  Engine
 //
 //  Created by Stefan Herold on 26.05.20.
@@ -7,11 +7,9 @@
 
 import Foundation
 
-/// Describes everything to operate on network resources. Encapsulates the details to form a network request. Conform
-/// an enum to it to implement multiple endpoints using the enum's cases.
-public protocol Resource {
-
-    static var service: Service { get }
+/// Describes everything to operate on network resources. Encapsulates the details to form a network request.
+/// - note: Conform an enum to it to implement multiple endpoints using the enum's cases.
+public protocol Endpoint {
     var host: String { get }
     var port: Int? { get }
     var path: String { get }
@@ -20,10 +18,13 @@ public protocol Resource {
     var headers: [String: String]? { get }
     var parameters: [String: Any]? { get }
     var shouldAuthorize: Bool { get }
+
+    /// Only the endpoint knows how to decode API specific JSON into model objects
+    func jsonDecode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
 }
 
-extension Resource {
-
+extension Endpoint {
+    
     var url: URL {
         var components = URLComponents()
         components.scheme = "https"

@@ -13,7 +13,7 @@ let package = Package(
         .library(name: "Engine", targets: ["Engine"])
     ],
     dependencies: [
-        .package(name: "Quick", url: "https://github.com/Quick/Quick", from: "3.1.1"),
+        .package(name: "Quick", url: "https://github.com/Quick/Quick", from: "3.1.2"),
         .package(name: "Nimble", url: "https://github.com/Quick/Nimble", from: "9.0.0")
     ],
     targets: [

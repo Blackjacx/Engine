@@ -16,4 +16,12 @@ public extension String {
     func appendPathComponent(_ value: String) -> String {
         (self as NSString).appendingPathComponent(value)
     }
+
+    func capitalizedFirst() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    func lowercasedFirst() -> String {
+        return prefix(1).lowercased() + dropFirst()
+    }
 }
