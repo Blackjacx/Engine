@@ -41,8 +41,9 @@ public struct Network {
         request.allHTTPHeaderFields = endpoint.headers
 
         if Self.verbosityLevel > 1 {
-          print("Request: [\(endpoint.method)] \(endpoint.url)")
-          print("Header Fields: \(endpoint.headers ?? [:])")
+            print("Request: [\(endpoint.method.rawValue)] \(endpoint.url) • Headers: [")
+            endpoint.headers?.forEach { print("\t \($0)") }
+            print("]")
         }
 
         if let parameters = endpoint.parameters {
@@ -61,13 +62,17 @@ public struct Network {
                 return
             }
 
+            if Self.verbosityLevel > 1 {
+                print("\nResponse: \(response)")
+            }
+
             guard (200..<400).contains(response.statusCode) else {
 
                 var loggedError: Swift.Error? = error
                 if let data = data, let failureMessage = String(data: data, encoding: .utf8) {
                     loggedError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: failureMessage])
                 }
-                completion(.failure(.invalidStatusCode(code: response.statusCode, error: loggedError)))
+                completion(.failure(.invalidStatusCode(code: response.statusCode, underlying: loggedError)))
                 return
             }
 
