@@ -8,10 +8,5 @@
 import Foundation
 
 public struct DataWrapper<T: Decodable>: Decodable {
-
-    enum CodingKeys: String, CodingKey {
-        case object = "data"
-    }
-
-    public let object: T
+    public let data: T
 }
