@@ -10,6 +10,7 @@ import Foundation
 extension Network {
 
     public enum Error: Swift.Error {
+        case generic(error: Swift.Error)
         case invalidResponse(error: Swift.Error?)
         case invalidStatusCode(code: Int, underlying: Swift.Error?)
         case noData(error: Swift.Error?)
