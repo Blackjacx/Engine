@@ -24,4 +24,14 @@ public extension String {
     func lowercasedFirst() -> String {
         return prefix(1).lowercased() + dropFirst()
     }
+
+    var localized: String {
+        let appTranslation = NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: self, comment: "")
+
+        if appTranslation != self {
+            return appTranslation
+        }
+
+        return self
+    }
 }
