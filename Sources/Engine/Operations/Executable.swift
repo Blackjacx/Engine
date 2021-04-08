@@ -22,9 +22,14 @@ public extension Executable {
         concurrentQueue.addOperations([self], waitUntilFinished: true)
     }
 
-    func executeAsync(completion: @escaping () -> Void) {
-        concurrentQueue.addOperation(self)
-        concurrentQueue.addBarrierBlock { completion() }
+    func executeAsync(completion:  @escaping () -> Void) {
+        let completionOperation = BlockOperation {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+        completionOperation.addDependency(self)
+        concurrentQueue.addOperations([self, completionOperation], waitUntilFinished: false)
     }
 }
 
@@ -35,7 +40,12 @@ public extension Array where Element: Executable {
     }
 
     func executeAsync(completion: @escaping () -> Void) {
-        concurrentQueue.addOperations(self, waitUntilFinished: false)
-        concurrentQueue.addBarrierBlock { completion() }
+        let completionOperation = BlockOperation {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+        forEach { [unowned completionOperation] in completionOperation.addDependency($0) }
+        concurrentQueue.addOperations(self + [completionOperation], waitUntilFinished: false)
     }
 }
