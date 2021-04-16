@@ -10,6 +10,7 @@ import Foundation
 /// Describes everything to operate on network resources. Encapsulates the details to form a network request.
 /// - note: Conform an enum to it to implement multiple endpoints using the enum's cases.
 public protocol Endpoint {
+    var url: URL? { get }
     var host: String { get }
     var port: Int? { get }
     var path: String { get }
@@ -24,16 +25,19 @@ public protocol Endpoint {
 }
 
 extension Endpoint {
-    
-    var url: URL {
+
+    func buildUrl() -> URL {
+        if let url = url {
+            return url
+        }
         var components = URLComponents()
         components.scheme = "https"
         components.host = host
         components.port = port
         components.path = path
-        
+
         if !queryItems.isEmpty {
-          components.queryItems = queryItems
+            components.queryItems = queryItems
         }
         return components.url!
     }
