@@ -36,12 +36,14 @@ public struct Network {
 
     public func request<T: Decodable>(endpoint: Endpoint, completion: @escaping RequestClosure<T>) {
 
-        var request = URLRequest(url: endpoint.url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5)
+        let url = endpoint.buildUrl()
+
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5)
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.headers
 
         if Self.verbosityLevel > 1 {
-            print("Request: [\(endpoint.method.rawValue)] \(endpoint.url) • Headers: [")
+            print("Request: [\(endpoint.method.rawValue)] \(url) • Headers: [")
             endpoint.headers?.forEach { print("\t \($0)") }
             print("]")
         }
