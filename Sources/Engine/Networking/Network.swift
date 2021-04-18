@@ -13,7 +13,7 @@ import FoundationNetworking
 #endif
 
 public typealias RequestClosure<T: Decodable> = (RequestResult<T>) -> Void
-public typealias RequestResult<T: Decodable> = Result<T, Network.Error>
+public typealias RequestResult<T: Decodable> = Result<T, NetworkError>
 
 public struct Network {
 
@@ -32,7 +32,7 @@ public struct Network {
                                      queue: DispatchQueue = .main,
                                      retries: Int = 0,
                                      timeout: TimeInterval = 5,
-                                     cachingPolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> AnyPublisher<Data, Network.Error> {
+                                     cachingPolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> AnyPublisher<Data, NetworkError> {
 
         let url = endpoint.buildUrl()
         var request = URLRequest(url: url, cachePolicy: cachingPolicy, timeoutInterval: timeout)
@@ -43,47 +43,52 @@ public struct Network {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
             } catch {
-                return Fail(outputType: Data.self, failure: Network.Error.parameterEncodingToJsonFailed(error: error))
+                return Fail(outputType: Data.self, failure: NetworkError.parameterEncodingToJsonFailed(error: error))
                     .eraseToAnyPublisher()
             }
         }
 
         return Self.session.dataTaskPublisher(for: request)
             .receive(on: queue)
-            .mapError {
-                Network.Error.invalidResponse(error: $0)
-            }
-            .tryMap { element -> Data in
+            .mapError { NetworkError.invalidResponse(error: $0) }
+            .tryMap { result -> Data in
                 if Self.verbosityLevel > 1 {
                     print("Request: [\(endpoint.method.rawValue)] \(url) • Headers: [")
                     endpoint.headers?.forEach { print("\t \($0)") }
                     print("]")
                 }
 
-                guard let response = element.response as? HTTPURLResponse else {
-                    throw Network.Error.invalidResponse(error: URLError(.badServerResponse))
+                guard let response = result.response as? HTTPURLResponse else {
+                    throw NetworkError.invalidResponse(error: URLError(.badServerResponse))
                 }
 
                 if Self.verbosityLevel > 1 {
                     print("\nResponse: \(response)")
                 }
 
+                #warning("""
+                    In the following cases probably no retry needed - maybe special handling needed here too:
+                    - 404 - not found
+                    - 501 - not implemented
+                    - 429 - too many requests / rate limit
+                    - 503 - server busy
+                    Link: https://www.donnywals.com/retrying-a-network-request-with-a-delay-in-combine/
+                    """)
                 guard (200..<400).contains(response.statusCode) else {
-                    var urlError: Swift.Error?
-                    if let failureMessage = String(data: element.data, encoding: .utf8) {
-                        urlError = URLError(.badServerResponse, userInfo: [NSLocalizedDescriptionKey: failureMessage])
+                    if Self.verbosityLevel > 1, let failureMessage = String(data: result.data, encoding: .utf8) {
+                        print("\nError: \(failureMessage)")
                     }
-                    throw Network.Error.invalidStatusCode(code: response.statusCode, underlying: urlError)
+                    throw NetworkError.invalidStatusCode(code: response.statusCode)
                 }
 
                 if Self.verbosityLevel > 0 {
-                    let json = String(data: element.data, encoding: .utf8)!
+                    let json = String(data: result.data, encoding: .utf8)!
                     print(json)
                 }
-                return element.data
+                return result.data
             }
             .retry(retries)
-            .mapError { $0 as! Network.Error }
+            .mapError { $0 as! NetworkError }
             .eraseToAnyPublisher()
     }
 
@@ -92,7 +97,7 @@ public struct Network {
                            queue: DispatchQueue = .main,
                            retries: Int = 0,
                            timeout: TimeInterval = 5,
-                           cachingPolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> AnyPublisher<T, Network.Error>  where T: Decodable {
+                           cachingPolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> AnyPublisher<T, NetworkError>  where T: Decodable {
 
         let publisher = requestDataPublisher(endpoint: endpoint,
                                              queue: queue,
@@ -100,8 +105,8 @@ public struct Network {
                                              timeout: timeout,
                                              cachingPolicy: cachingPolicy)
             .decode(type: T.self, decoder: Json.decoder)
-            .mapError { error -> Network.Error in
-                error as? Network.Error ?? Error.jsonDecodingFailed(error: error)
+            .mapError { error -> NetworkError in
+                error as? NetworkError ?? .jsonDecodingFailed(error: error)
             }
             
             // Throw another error
