@@ -19,6 +19,7 @@ public protocol Endpoint {
     var headers: [String: String]? { get }
     var parameters: [String: Any]? { get }
     var shouldAuthorize: Bool { get }
+    var timeout: TimeInterval { get }
 
     /// Only the endpoint knows how to decode API specific JSON into model objects
     func jsonDecode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
