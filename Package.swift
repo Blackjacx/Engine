@@ -1,13 +1,13 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
     name: "Engine",
     platforms: [
-        .macOS(.v10_15),
-        .iOS(.v13),
-        .watchOS(.v5),
-        .tvOS(.v11)
+        .macOS("12"),
+        .iOS("15"),
+        .tvOS("15"),
+        .watchOS("8")
     ],
     products: [
         .library(name: "Engine", targets: ["Engine"])
