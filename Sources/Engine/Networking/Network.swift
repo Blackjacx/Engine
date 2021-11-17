@@ -29,15 +29,16 @@ public struct Network {
     public func request<T: Decodable>(endpoint: Endpoint) async throws -> T {
 
         let url = endpoint.buildUrl()
+        let headers = await endpoint.headers()
         var request = URLRequest(url: url,
                                  cachePolicy: .useProtocolCachePolicy,
                                  timeoutInterval: endpoint.timeout)
         request.httpMethod = endpoint.method.rawValue
-        request.allHTTPHeaderFields = endpoint.headers
+        request.allHTTPHeaderFields = headers
 
         if Self.verbosityLevel > 1 {
             print("Request: [\(endpoint.method.rawValue)] \(url) • Headers: [")
-            endpoint.headers?.forEach { print("\t \($0)") }
+            headers?.forEach { print("\t \($0)") }
             print("]")
         }
 
