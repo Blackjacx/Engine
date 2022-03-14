@@ -1,4 +1,5 @@
 # Changelog
 
 ## [Unreleased]
-* Implement AsyncResultOperation & ChainedAsyncResultOperation - [@blackjacx](https://github.com/blackjacx).
+* [#3](https://github.com/blackjacx/engine/pull/3): Async Await Support - [@Blackjacx](https://github.com/blackjacx).
+* Implement AsyncResultOperation & ChainedAsyncResultOperation - [@Blackjacx](https://github.com/blackjacx).
