@@ -16,9 +16,13 @@ public protocol Endpoint {
     var path: String { get }
     var queryItems: [URLQueryItem] { get }
     var method: HTTPMethod { get }
-    var headers: [String: String]? { get }
     var parameters: [String: Any]? { get }
     var shouldAuthorize: Bool { get }
+    var timeout: TimeInterval { get }
+
+    /// Returns headers as key-value pair. Sometimes header's need to be
+    /// computed (authorization). Thats's the reason for the async function.
+    func headers() async -> [String : String]?
 
     /// Only the endpoint knows how to decode API specific JSON into model objects
     func jsonDecode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
