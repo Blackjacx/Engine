@@ -12,3 +12,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/STHEROLD)
 
 The engine that powers all my packages, tools and apps.
+
+## Code Documentation
+
+Find the statically generated code documentation [here](https://blackjacx.github.io/Engine/documentation/engine/) (powered by [DocC](https://developer.apple.com/documentation/docc))
