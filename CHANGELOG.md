@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.0.4] - 2022-07-02Z
 * [#7](https://github.com/blackjacx/engine/pull/7): Adding DocC Documentation - [@Blackjacx](https://github.com/blackjacx).
 * Upgrade to Swift 5.6 - [@Blackjacx](https://github.com/blackjacx).
 
