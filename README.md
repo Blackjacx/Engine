@@ -10,6 +10,8 @@
 [![Codebeat](https://codebeat.co/badges/c1452aaa-260a-421a-8f1a-5b51ab3ad316)](https://codebeat.co/projects/github-com-blackjacx-engine-develop)
 [![License](https://img.shields.io/github/license/blackjacx/engine.svg)](https://github.com/blackjacx/engine/blob/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/STHEROLD)
+[![Version](https://shields.io/github/v/release/blackjacx/Engine?display_name=tag&include_prereleases&sort=semver)](https://github.com/Blackjacx/Engine/releases)
+
 
 The engine that powers all my packages, tools and apps.
 
