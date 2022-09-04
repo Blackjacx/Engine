@@ -8,7 +8,7 @@
 [![iOS 15+](https://img.shields.io/badge/iOS-15.0%2B-blue.svg)](https://developer.apple.com/download/)
 [![Xcode 13+](https://img.shields.io/badge/Xcode-13%2B-blue.svg)](https://developer.apple.com/download/)
 [![Codebeat](https://codebeat.co/badges/c1452aaa-260a-421a-8f1a-5b51ab3ad316)](https://codebeat.co/projects/github-com-blackjacx-engine-develop)
-[![License](https://img.shields.io/github/license/blackjacx/engine.svg)](https://github.com/blackjacx/engine/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/blackjacx/engine.svg)](https://github.com/blackjacx/engine/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/blackjacxxx?label=%40Blackjacxxx)](https://twitter.com/blackjacx)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/STHEROLD)
 
