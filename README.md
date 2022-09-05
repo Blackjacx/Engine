@@ -17,13 +17,7 @@ The engine that powers all my packages, tools and apps.
 
 Find the statically generated code documentation [here](https://blackjacx.github.io/Engine/documentation/engine/) (powered by [DocC](https://developer.apple.com/documentation/docc))
 
-## Contribution
-
-- If you found a **bug**, please open an **issue**.
-- If you have a **feature request**, please open an **issue**.
-- If you want to **contribute**, please submit a **pull request**.
-
-### Release
+## Release
 
 To release this Swift package the following steps have to be taken:
 - Create a new branch `release-x.y.z`
@@ -44,6 +38,12 @@ Engine release x.y.z 🎉
 
 #SPM #Apple #Development #Support #Library #Package #Framework #Tools #Basics #Boilerplate #Code
 ```
+
+## Contribution
+
+- If you found a **bug**, please open an **issue**.
+- If you have a **feature request**, please open an **issue**.
+- If you want to **contribute**, please submit a **pull request**.
 
 ## Author
 
