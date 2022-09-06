@@ -10,11 +10,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest]
-        swift: ["5.6"]
+        swift: ["5.6.1"]
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: fwal/setup-swift@2040b795e5c453c3a05fcb8316496afc8a74f192
+      - uses: swift-actions/setup-swift@v1
         with:
           swift-version: ${{ matrix.swift }}
       - uses: actions/checkout@v3
