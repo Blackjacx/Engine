@@ -15,7 +15,7 @@ The engine that powers all my packages, tools and apps.
 
 ## Code Documentation
 
-Find the statically generated code documentation [here](https://blackjacx.github.io/Engine/documentation/engine/) (powered by [DocC](https://developer.apple.com/documentation/docc))
+The [code documentation](https://swiftpackageindex.com/Blackjacx/Engine/develop/documentation/engine) is generated and hosted by [Swift Package Index](https://swiftpackageindex.com/) (powered by [DocC](https://developer.apple.com/documentation/docc))
 
 ## Release
 
