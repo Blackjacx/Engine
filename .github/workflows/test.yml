@@ -16,6 +16,6 @@ jobs:
       - name: Build
         run: |
           swift --version
-          swift build -v --enable-test-discovery
+          swift build -v
       - name: Test
-        run: swift test -v --enable-test-discovery --parallel
+        run: swift test -v --parallel
