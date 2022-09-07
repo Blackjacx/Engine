@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+* Fix Testing GH Actions workflow - [@Blackjacx](https://github.com/blackjacx).
+* Moving Quickie Package here - [@Blackjacx](https://github.com/blackjacx).
+* Fix GH Actions Tests - [@Blackjacx](https://github.com/blackjacx).
 
 ## [0.0.4] - 2022-07-02Z
 * [#7](https://github.com/blackjacx/engine/pull/7): Adding DocC Documentation - [@Blackjacx](https://github.com/blackjacx).
