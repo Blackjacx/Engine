@@ -7,10 +7,14 @@
 
 import Foundation
 
-public enum HTTPMethod: String, Equatable, Hashable {
+public enum HTTPMethod: String, Equatable, Codable, Hashable {
     case get = "GET"
     case post = "POST"
     case patch = "PATCH"
     case delete = "DELETE"
     case head = "HEAD"
+}
+
+public extension HTTPMethod {
+    var stringValue: String { rawValue }
 }
