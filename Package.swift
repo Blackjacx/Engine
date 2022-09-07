@@ -13,12 +13,9 @@ let package = Package(
     products: [
         .library(name: "Engine", targets: ["Engine"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/Quick/Quick", from: "5.0.0"),
-        .package(url: "https://github.com/Quick/Nimble", from: "10.0.0")
-    ],
+    dependencies: [],
     targets: [
         .target(name: "Engine"),
-        .testTarget(name: "EngineTests", dependencies: ["Engine", "Quick", "Nimble"])
+        .testTarget(name: "EngineTests", dependencies: ["Engine"])
     ]
 )
