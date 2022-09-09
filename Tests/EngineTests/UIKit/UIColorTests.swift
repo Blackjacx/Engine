@@ -13,8 +13,7 @@ final class UIColorTests: XCTestCase {
 
     func testConversionFrom32BitHexIntegerToColor() {
 
-        let hex32 = 0xffeeddcc
-        let color = UIColor(hex32: hex32)  // hex 32 bit initializer
+        let color = UIColor(hex32: 0xffeeddcc)  // hex 32 bit initializer
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
@@ -29,8 +28,7 @@ final class UIColorTests: XCTestCase {
 
     func testConversionFrom24BitHexIntegerToColor() {
 
-        let hex24 = 0xffeedd
-        let color = UIColor(hex24) // hex 24 bit initializer
+        let color = UIColor(0xffeedd) // hex 24 bit initializer
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0

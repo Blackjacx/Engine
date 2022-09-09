@@ -81,7 +81,7 @@ public extension UIColor {
     /// Creates a UIColor from a hex value. Currently it can only handle opaque
     /// colors (colors with alpha == 1).
     /// - Parameter hex32: The integer hex value to create the color from.
-    convenience init(hex32: Int) {
+    convenience init(hex32: UInt32) {
         self.init(r: UInt8((hex32 >> 24) & 0xFF),
                   g: UInt8((hex32 >> 16) & 0xFF),
                   b: UInt8((hex32 >>  8) & 0xFF),
