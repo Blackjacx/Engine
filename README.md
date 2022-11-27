@@ -51,8 +51,10 @@ Engine release x.y.z 🎉
 
 ## Contributors
 
-<a href="https://github.com/blackjacx/engine/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=blackjacx/engine" />
+Thanks to all of you who are part of this:
+
+<a href="https://github.com/blackjacx/Engine/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=blackjacx/Engine" />
 </a>
 
 ## License
