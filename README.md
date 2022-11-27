@@ -49,6 +49,12 @@ Engine release x.y.z 🎉
 
 [Stefan Herold](mailto:stefan.herold@gmail.com) • 🐦 [@Blackjacxxx](https://twitter.com/Blackjacxxx)
 
+## Contributors
+
+<a href="https://github.com/blackjacx/engine/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=blackjacx/engine" />
+</a>
+
 ## License
 
 Engine is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
