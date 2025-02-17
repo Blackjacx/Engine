@@ -6,13 +6,15 @@
 //
 
 #if canImport(UIKit)
-import XCTest
+import UIKit
+import Testing
 @testable import Engine
 
-final class UIColorTests: XCTestCase {
+@Suite()
+struct UIColorTests {
 
-    func testConversionFrom32BitHexIntegerToColor() {
-
+    @Test("Conversion From 32Bit Hex-Integer To Color")
+    func conversionFrom32BitHexIntegerToColor() async throws {
         let color = UIColor(hex32: 0xffeeddcc)  // hex 32 bit initializer
         var r: CGFloat = 0
         var g: CGFloat = 0
@@ -20,14 +22,14 @@ final class UIColorTests: XCTestCase {
         var a: CGFloat = 0
         color.getRed(&r, green: &g, blue: &b, alpha: &a)
 
-        XCTAssertEqual(Int(r * 255), 255)
-        XCTAssertEqual(Int(g * 255), 238)
-        XCTAssertEqual(Int(b * 255), 221)
-        XCTAssertEqual(Int(a * 255), 204)
+        #expect(Int(r * 255) == 255)
+        #expect(Int(g * 255) == 238)
+        #expect(Int(b * 255) == 221)
+        #expect(Int(a * 255) == 204)
     }
 
-    func testConversionFrom24BitHexIntegerToColor() {
-
+    @Test("Conversion From 24Bit Hex-Integer To Color")
+    func conversionFrom24BitHexIntegerToColor() async throws {
         let color = UIColor(0xffeedd) // hex 24 bit initializer
         var r: CGFloat = 0
         var g: CGFloat = 0
@@ -35,10 +37,10 @@ final class UIColorTests: XCTestCase {
         var a: CGFloat = 0
         color.getRed(&r, green: &g, blue: &b, alpha: &a)
 
-        XCTAssertEqual(Int(r * 255), 255)
-        XCTAssertEqual(Int(g * 255), 238)
-        XCTAssertEqual(Int(b * 255), 221)
-        XCTAssertEqual(Int(a * 255), 255)
+        #expect(Int(r * 255) == 255)
+        #expect(Int(g * 255) == 238)
+        #expect(Int(b * 255) == 221)
+        #expect(Int(a * 255) == 255)
     }
 }
 #endif

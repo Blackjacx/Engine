@@ -6,10 +6,11 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import Engine
 
-final class ClampingTests: XCTestCase {
+@Suite()
+struct ClampingTests {
     static let min: Double = 0
     static let max: Double = 14
 
@@ -29,35 +30,37 @@ final class ClampingTests: XCTestCase {
         let overflowValue = Clamping(initialValue: max + 0.001, min...max)
     }
 
-    func testClampingOnWrappedValueInit() {
+    @Test("Clamping On Wrapped Value Init")
+    func clampingOnWrappedValueInit() async throws {
         var c1 = Collection1()
-        XCTAssertEqual(c1.underflowValue, Self.min)
-        XCTAssertEqual(c1.lowerEqualValue, Self.min)
-        XCTAssertEqual(c1.inRangeValue, 7)
-        XCTAssertEqual(c1.upperEqualValue, Self.max)
-        XCTAssertEqual(c1.overflowValue, Self.max)
+        #expect(c1.underflowValue == Self.min)
+        #expect(c1.lowerEqualValue == Self.min)
+        #expect(c1.inRangeValue == 7)
+        #expect(c1.upperEqualValue == Self.max)
+        #expect(c1.overflowValue == Self.max)
 
         c1.inRangeValue -= 100
-        XCTAssertEqual(c1.inRangeValue, Self.min)
+        #expect(c1.inRangeValue == Self.min)
         c1.inRangeValue = 7
-        XCTAssertEqual(c1.inRangeValue, 7)
+        #expect(c1.inRangeValue == 7)
         c1.inRangeValue += 100
-        XCTAssertEqual(c1.inRangeValue, Self.max)
+        #expect(c1.inRangeValue == Self.max)
     }
 
-    func testClampingOnAlternativeInit() {
+    @Test("Clamping On Alternative Init")
+    func clampingOnAlternativeInit() {
         var c2 = Collection2()
-        XCTAssertEqual(c2.underflowValue.value, Self.min)
-        XCTAssertEqual(c2.lowerEqualValue.value, Self.min)
-        XCTAssertEqual(c2.inRangeValue.value, 7)
-        XCTAssertEqual(c2.upperEqualValue.value, Self.max)
-        XCTAssertEqual(c2.overflowValue.value, Self.max)
+        #expect(c2.underflowValue.value == Self.min)
+        #expect(c2.lowerEqualValue.value == Self.min)
+        #expect(c2.inRangeValue.value == 7)
+        #expect(c2.upperEqualValue.value == Self.max)
+        #expect(c2.overflowValue.value == Self.max)
 
         c2.inRangeValue.value -= 100
-        XCTAssertEqual(c2.inRangeValue.value, -93.0)
+        #expect(c2.inRangeValue.value == -93.0)
         c2.inRangeValue.value = 7
-        XCTAssertEqual(c2.inRangeValue.value, 7)
+        #expect(c2.inRangeValue.value == 7)
         c2.inRangeValue.value += 100
-        XCTAssertEqual(c2.inRangeValue.value, 107.0)
+        #expect(c2.inRangeValue.value == 107.0)
     }
 }

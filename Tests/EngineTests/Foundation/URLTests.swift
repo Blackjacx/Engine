@@ -6,20 +6,21 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import Engine
 
-final class URLTests: XCTestCase {
+@Suite()
+struct URLTests {
 
-    func testConstructUrlEncodedUrlWithQuery() {
-
+    @Test("Construct URL Encoded URL with Query")
+    func constructUrlEncodedUrlWithQuery() async throws {
         let expected = "https://test.com/%C3%A4hm?z=12"
-
-        let url = URL.createFrom(scheme: "https",
-                                 host: "test.com",
-                                 path: "/ähm",
-                                 parameters: ["z": "12"])
-
-        XCTAssertEqual(url?.absoluteString, expected)
+        let url = URL.createFrom(
+            scheme: "https",
+            host: "test.com",
+            path: "/ähm",
+            parameters: ["z": "12"]
+        )
+        #expect(url?.absoluteString == expected)
     }
 }

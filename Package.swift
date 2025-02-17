@@ -1,11 +1,10 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.10
 import PackageDescription
 
 let package = Package(
     name: "Engine",
     platforms: [
-        .macOS(.v12),
-        .macCatalyst(.v15),
+        .macOS(.v13),
         .iOS(.v15),
         .tvOS(.v15),
         .watchOS(.v8)
@@ -13,9 +12,17 @@ let package = Package(
     products: [
         .library(name: "Engine", targets: ["Engine"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/jrendel/SwiftKeychainWrapper", from: "4.0.1")
+    ],
     targets: [
-        .target(name: "Engine"),
-        .testTarget(name: "EngineTests", dependencies: ["Engine"])
+        .target(
+            name: "Engine",
+            dependencies: ["SwiftKeychainWrapper"]
+        ),
+        .testTarget(
+            name: "EngineTests",
+            dependencies: ["Engine"]
+        )
     ]
 )
