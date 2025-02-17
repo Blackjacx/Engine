@@ -62,7 +62,7 @@ public extension String {
         }
 
         let start = workingBase.startIndex
-        let end = workingBase.index(start, offsetBy: String.IndexDistance(Swift.max(length, 0)))
+        let end = workingBase.index(start, offsetBy: Swift.max(length, 0))
         return String(workingBase[start..<end])
     }
 
