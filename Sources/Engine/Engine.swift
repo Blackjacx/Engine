@@ -7,3 +7,7 @@
 
 import Foundation
 
+struct Engine {
+    /// Global keychain
+    public static var keychain = Keychain()
+}

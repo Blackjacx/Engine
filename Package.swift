@@ -1,11 +1,10 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.10
 import PackageDescription
 
 let package = Package(
     name: "Engine",
     platforms: [
-        .macOS(.v12),
-        .macCatalyst(.v15),
+        .macOS(.v13),
         .iOS(.v15),
         .tvOS(.v15),
         .watchOS(.v8)
@@ -14,11 +13,16 @@ let package = Package(
         .library(name: "Engine", targets: ["Engine"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Quick/Quick", from: "4.0.0"),
-        .package(url: "https://github.com/Quick/Nimble", from: "9.2.1")
+        .package(url: "https://github.com/jrendel/SwiftKeychainWrapper", from: "4.0.1")
     ],
     targets: [
-        .target(name: "Engine"),
-        .testTarget(name: "EngineTests", dependencies: ["Engine", "Quick", "Nimble"])
+        .target(
+            name: "Engine",
+            dependencies: ["SwiftKeychainWrapper"]
+        ),
+        .testTarget(
+            name: "EngineTests",
+            dependencies: ["Engine"]
+        )
     ]
 )
