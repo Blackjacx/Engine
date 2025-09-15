@@ -26,6 +26,7 @@ To release this Swift package the following steps have to be taken:
 - Run `bundle update` to update all Ruby gems
 - Commit all changes, make a PR and merge it to develop
 - Run `bundle exec fastlane release framework:"Engine" version:"x.y.z"` to release the new version
+- Remove the release changelog entry from the created [GitHub Release](https://github.com/Blackjacx/Engine/releases)
 - Post the following on Twitter
 
 ```
