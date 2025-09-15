@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.2.0] - 2025-09-15Z
 * [#16](https://github.com/blackjacx/engine/pull/16): Replace Keychain Framework - [@Blackjacx](https://github.com/blackjacx).
 
 ## [0.1.0] - 2025-02-17Z
