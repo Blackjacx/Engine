@@ -80,7 +80,15 @@ public struct JWT {
                 }
                 return data
             case .keychain(let keychainKey):
-                guard let data = Engine.keychain.keychainItem(for: keychainKey)?.data(using: .utf8) else {
+                let data: Data?
+
+                do {
+                    data = try Engine.keychain.getData(for: keychainKey)
+                } catch {
+                    throw .failureLoadingFromKeychain(error)
+                }
+
+                guard let data else {
                     throw .keychainItemNotFound(keychainKey)
                 }
                 return data
@@ -142,6 +150,7 @@ public struct JWT {
         case credentialsNotSet
         case headerOrPayloadEncodingError
         case signingError
+        case failureLoadingFromKeychain(Swift.Error)
         case keychainItemNotFound(String)
         case conversionFailed
         case fileNotFound(String)

@@ -6,62 +6,33 @@
 //
 
 import Foundation
-import SwiftKeychainWrapper
+import KeychainAccess
 
 public struct Keychain {
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
 
-    private let keychain = KeychainWrapper(serviceName: ProcessInfo.processId)
-    private let persistentStore = UserDefaults.standard
-
-    /// The private store properties for our keychain items to not pull them
-    /// from the keychain if the app is still in memory. This allows us to
-    /// bypass the locked keychain when iPhone is locked and the app is just in
-    /// background.
-    private var transientStore: [String: String] = [:]
+    private let keychain = KeychainAccess.Keychain(service: ProcessInfo.processId)
 
     // MARK: - Public Interface
 
-    public mutating func setKeychainItem(_ value: String, key: String) -> Bool {
-
-        // Make sure to always set a Data object to the Keychain since
-        // otherwise storing an item will give you unexpected behaviour.
-        keychain.set(value, forKey: key)
-
-        guard keychain.string(forKey: key) == value else {
-            return false
-        }
-        transientStore[key] = value
-        persistentStore.set(true, forKey: key)
-
-        return true
+    public mutating func setObject<T: Codable>(_ value: T, key: String) throws {
+        let data = try encoder.encode(value)
+        try keychain.set(data, key: key)
     }
 
-    public mutating func keychainItem(for key: String) -> String? {
-
-        let hasKeychainItem = persistentStore.bool(forKey: key)
-
-        guard hasKeychainItem else {
-            removeKeychainItem(for: key)
+    public mutating func getObject<T: Codable>(for key: String) throws -> T? {
+        guard let data = try keychain.getData(key) else {
             return nil
         }
-
-        if let item = transientStore[key] {
-            return item
-        }
-
-        guard let value = keychain.string(forKey: key) else {
-            removeKeychainItem(for: key)
-            return nil
-        }
-
-        transientStore[key] = value
-        return value
+        return try decoder.decode(T.self, from: data)
     }
 
-    public mutating func removeKeychainItem(for key: String) {
+    public mutating func getData(for key: String) throws -> Data? {
+        return try keychain.getData(key)
+    }
 
-        transientStore[key] = nil
-        persistentStore.setValue(nil, forKey: key)
-        keychain.removeObject(forKey: key)
+    public mutating func removeObject(for key: String) throws {
+        try keychain.remove(key)
     }
 }
