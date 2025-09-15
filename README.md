@@ -32,8 +32,8 @@ To release this Swift package the following steps have to be taken:
 ```
 Engine release x.y.z 🎉
 
-▸ 🚀  Library package Engine (x.y.z) successfully published
-▸ 📅  September 2nd
+▸ 🚀  Library package Engine successfully published
+▸ 📅  Sep 15th
 ▸ 🌎  https://swiftpackageindex.com/Blackjacx/Engine
 ▸ 🌎  https://github.com/Blackjacx/Engine/releases/latest
 ▸ 👍  Tell your friends!
