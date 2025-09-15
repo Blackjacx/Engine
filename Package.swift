@@ -13,12 +13,12 @@ let package = Package(
         .library(name: "Engine", targets: ["Engine"])
     ],
     dependencies: [
-        .package(url: "https://github.com/jrendel/SwiftKeychainWrapper", from: "4.0.1")
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2")
     ],
     targets: [
         .target(
             name: "Engine",
-            dependencies: ["SwiftKeychainWrapper"]
+            dependencies: ["KeychainAccess"]
         ),
         .testTarget(
             name: "EngineTests",
