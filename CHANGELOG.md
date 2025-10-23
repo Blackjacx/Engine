@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-10-23Z
+
 * [#25](https://github.com/blackjacx/engine/pull/25): Support request output types - [@blackjacx](https://github.com/blackjacx).
 
 ## [0.2.0] - 2025-09-15Z
