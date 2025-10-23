@@ -26,7 +26,19 @@ public struct Network {
 
     // MARK: - Async / Await
 
-    public func request<T: Decodable>(endpoint: Endpoint) async throws -> T {
+    
+    /// Requests a given endpoint, decoded the result into a Decodable object
+    /// which is then returned..
+    /// - Parameters:
+    ///   - endpoint: The endpoint with all needed information for the request.
+    ///   - isOutputDesired: When doing chained requests you typically only
+    ///   want to see the final result. This is used to prevent printing the
+    ///   results from intermediate requests.
+    /// - Returns: The decoded object.
+    public func request<T: Decodable>(
+        endpoint: Endpoint,
+        outputType: OutputType,
+    ) async throws -> T {
 
         let url = endpoint.buildUrl()
         let headers = await endpoint.headers()
@@ -68,6 +80,15 @@ public struct Network {
             throw NetworkError.invalidStatusCode(code: response.statusCode, underlying: error)
         }
 
+        switch outputType {
+        case .raw:
+            let json = String(data: data, encoding: .utf8)!
+            print(json)
+        case .none:
+            break
+        }
+
+        /// Verbose output may print json output redundantly
         if Self.verbosityLevel > 0 {
             let json = String(data: data, encoding: .utf8)!
             print(json)
