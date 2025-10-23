@@ -21,24 +21,37 @@ The [code documentation](https://swiftpackageindex.com/Blackjacx/Engine/develop/
 
 To release this Swift package the following steps have to be taken:
 
-- Create a new branch `release-x.y.z`
-- Run `bash <(curl -H -s https://raw.githubusercontent.com/Blackjacx/Scripts/master/frameworks/bootstrap.sh)` to update to the latest shared development files
+- Make sure all features / PRs are merged to `develop`
+- Checkout develop and pull:
+  ```shell
+  git checkout develop && git pull
+  ```
+- Update to the latest shared development files:
+  ```shell
+  bash <(curl -H -s https://raw.githubusercontent.com/Blackjacx/Scripts/main/frameworks/bootstrap.sh)
+  ```
 - Run `bundle update` to update all Ruby gems
-- Commit all changes, make a PR and merge it to develop
-- Run `bundle exec fastlane release framework:"Engine" version:"x.y.z"` to release the new version
-- Post the following on Twitter
+- Run `swift package update` to update all SPM dependencies
+- Commit all changes on `develop` using:
+  ```
+  git commit -am "Release version 'x.y.z'"
+  ```
+- Release the new version:
+  ```shell
+  bundle exec fastlane release framework:"Engine" version:"x.y.z"
+  ```
+- Post the following on Twitter:
+  ```
+  Engine release x.y.z 🎉
 
-```
-Engine release x.y.z 🎉
+  ▸ 🚀  Library package Engine successfully published
+  ▸ 📅  Sep 15th
+  ▸ 🌎  https://swiftpackageindex.com/Blackjacx/Engine
+  ▸ 🌎  https://github.com/Blackjacx/Engine/releases/latest
+  ▸ 👍  Tell your friends!
 
-▸ 🚀  Library package Engine (x.y.z) successfully published
-▸ 📅  September 2nd
-▸ 🌎  https://swiftpackageindex.com/Blackjacx/Engine
-▸ 🌎  https://github.com/Blackjacx/Engine/releases/latest
-▸ 👍  Tell your friends!
-
-#SPM #Apple #Development #Support #Library #Package #Framework #Tools #Basics #Boilerplate #Code
-```
+  #SPM #Apple #Development #Support #Library #Package #Framework #Tools #Basics #Boilerplate #Code
+  ```
 
 ## Contribution
 
