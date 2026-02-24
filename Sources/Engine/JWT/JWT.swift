@@ -160,9 +160,9 @@ public struct JWT {
         case keyContainsNoData(String)
         case googleServiceAccountJsonNotFound(path: String)
         case invalidResonse(response: URLResponse)
-        /// The token URL string is malformed or cannot be converted to a valid `URL`.
-        /// - Parameter url: The invalid URL string.
-        case invalidTokenUrl(String)
+        /// The URL string is malformed or cannot be converted to a valid `URL`.
+        /// - Parameter url: The malformed URL string.
+        case malformedUrl(String)
     }
 }
 
