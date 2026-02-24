@@ -48,18 +48,16 @@ public struct Network {
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = headers
 
-        if Self.verbosityLevel > 1 {
-            print("Request: [\(endpoint.method.rawValue)] \(url) • Headers: [")
-            headers?.forEach { print("\t \($0)") }
-            print("]")
-        }
-
         if let parameters = endpoint.parameters {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
             } catch {
                 throw NetworkError.parameterEncodingToJsonFailed(error: error)
             }
+        }
+
+        if Self.verbosityLevel > 1 {
+            print(request.extendedDescription)
         }
 
         let (data, response) = try await Self.session.data(for: request, delegate: nil)

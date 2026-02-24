@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-02-24Z
+
+* [#29](https://github.com/blackjacx/engine/pull/29): feat: add malformedUrl case to JWT.Error - [@blackjacx](https://github.com/blackjacx).
+
 ## [0.3.0] - 2025-10-23Z
 
 * [#25](https://github.com/blackjacx/engine/pull/25): Support request output types - [@blackjacx](https://github.com/blackjacx).

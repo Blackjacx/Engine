@@ -61,7 +61,7 @@ To release this Swift package the following steps have to be taken:
 
 ## Author
 
-[Stefan Herold](mailto:stefan.herold@gmail.com) • 🐦 [@Blackjacxxx](https://twitter.com/Blackjacxxx)
+[Stefan Herold](mailto:stefan.herold@gmail.com) • [X](https://twitter.com/Blackjacxxx) • [Bluesky](https://bsky.app/profile/blackjacx.bsky.social) • [Mastodon](https://mastodon.social/@blackjacx)
 
 ## Contributors
 
