@@ -160,5 +160,7 @@ public struct JWT {
         case keyContainsNoData(String)
         case googleServiceAccountJsonNotFound(path: String)
         case invalidResonse(response: URLResponse)
+        case invalidTokenUrl(String)
     }
 }
+
