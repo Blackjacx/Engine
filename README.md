@@ -5,7 +5,7 @@
 [![Swift Package Manager Compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 [![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FBlackjacx%2FEngine%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/Blackjacx/Engine)
 [![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FBlackjacx%2FEngine%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/Blackjacx/Engine)
-[![Xcode 16+](https://img.shields.io/badge/Xcode-16%2B-blue.svg)](https://developer.apple.com/download/)
+[![Xcode 26+](https://img.shields.io/badge/Xcode-16%2B-blue.svg)](https://developer.apple.com/download/)
 [![License](https://img.shields.io/github/license/blackjacx/engine.svg)](https://github.com/blackjacx/engine/blob/main/LICENSE)
 [![Donate PayPal](https://img.shields.io/badge/Donate-PayPal-0079c1?logo=paypal)](https://www.paypal.me/STHEROLD)
 
@@ -41,6 +41,7 @@ To release this Swift package the following steps have to be taken:
   bundle exec fastlane release framework:"Engine" version:"x.y.z"
   ```
 - Post the following on Twitter:
+
   ```
   Engine release x.y.z 🎉
 
