@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+* Dependency updates - [@blackjacx](https://github.com/blackjacx).
 
 ## [0.3.1] - 2026-02-24Z
 
