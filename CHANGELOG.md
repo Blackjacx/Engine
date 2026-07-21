@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.3.3] - 2026-07-21Z
 * [#32](https://github.com/blackjacx/engine/pull/32): Add Encodable.jsonString() helper - [@blackjacx](https://github.com/blackjacx).
 
 ## [0.3.2] - 2026-07-21Z
